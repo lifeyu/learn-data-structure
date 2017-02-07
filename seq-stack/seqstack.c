@@ -52,7 +52,7 @@ boolean GetTop(Stack *stack, ElemType *elem)
 
 void Push(Stack *stack, ElemType elem)
 {
-	if (isFull(stack))
+	if (isFull(stack) && !inCrement(stack))
 	{
 		printf("栈空间已满，%d 不能入栈.\n", elem);	
 		return;
@@ -74,7 +74,21 @@ void Pop(Stack *stack)
 
 boolean isFull(Stack *stack)
 {
-	return stack -> top == stack -> capacity - 1;
+	return stack -> top >= stack -> capacity;
+}
+
+boolean inCrement(Stack *stack)
+{
+	ElemType *newbase = (ElemType *) realloc (stack -> base, sizeof(ElemType) * (stack -> capacity + STACK_INCREMENT_SIZE));
+	if (newbase == NULL)
+	{
+		printf("内存不足，无法申请空间.\n");	
+		return false;
+	}
+
+	stack -> base = newbase;
+	stack -> capacity += STACK_INCREMENT_SIZE;
+	return true;
 }
 
 void show(Stack *stack)

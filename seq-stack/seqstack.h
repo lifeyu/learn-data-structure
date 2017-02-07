@@ -11,7 +11,8 @@ typedef _Bool boolean;
 typedef int ElemType;			// 顺序栈存储值的类型
 
 #define EMPTYTOS 0
-#define STACK_INIT_SIZE 8
+#define STACK_INIT_SIZE      8
+#define STACK_INCREMENT_SIZE 5
 
 typedef struct SeqStack {			// 顺序栈结构
 	ElemType *base;
@@ -58,6 +59,13 @@ void Pop(Stack *stack);
  * return 如果栈满返回 true，否则返回 false
  */
 boolean isFull(Stack *stack);
+
+/**
+ * 当前栈空间满时，为栈增加指定增量的空间
+ *
+ * return 如果增加失败则内存已满
+ */
+boolean inCrement(Stack *stack);
 
 void show(Stack *stack);
 
